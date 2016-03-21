@@ -11,24 +11,26 @@ public class HiShooter extends Subsystem {
 
 	private CANTalon highMotor;
 	private DigitalInput opticalSensor;
-	
+
 	public HiShooter(){
 		highMotor = new CANTalon(3);
 		//opticalSensor = new DigitalInput(0);
 	}
-	
+
 	@Override
 	protected void initDefaultCommand() {
 		setDefaultCommand(new DefaultShooterCommand());
 	}
+
 	//set collector motor speed
 	public void set(double speed){
-	
-	highMotor.set(speed);
+
+		highMotor.set(speed);
 	}
+
 	//if sensor reads true we have the ball, otherwise it does not
 	public boolean hasBall() {
-		
+
 		return opticalSensor.get();
 	}
 }
