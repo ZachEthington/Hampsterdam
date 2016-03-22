@@ -1,4 +1,3 @@
-
 package org.usfirst.frc.team1829.robot;
 
 import org.usfirst.frc.team1829.robot.commands.BasicAutonomousDriveCommand;
@@ -28,41 +27,42 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * directory.
  */
 public class Robot extends IterativeRobot {
-    
+
 	public static Joystick myJoystick = new Joystick(0);
 	final String defaultAuto = "Default";
-    final String customAuto = "My Auto";
-    String autoSelected;
-    SendableChooser chooser;
-    private static Drive currentDrive;
-    private static Collector myCollector = new Collector();
-    private static HiShooter myHiShooter = new HiShooter();
-    public static Drive getcurrentDrive(){
-    	return currentDrive;
-    }
-    //
+	final String customAuto = "My Auto";
+	String autoSelected;
+	SendableChooser chooser;
+	private static Drive currentDrive;
+	private static Collector myCollector = new Collector();
+	private static HiShooter myHiShooter = new HiShooter();
+
+	public static Drive getcurrentDrive(){
+		return currentDrive;
+	}
+
 	public static Collector getCollector() {
 		return myCollector;
 	}
-	
+
 	public static HiShooter getHiShooter() {
 		return myHiShooter;
 	}
-    /**
-     * This function is run when the robot is first started up and should be
-     * used for any initialization code./
-     */
-    public void robotInit() {
-        chooser = new SendableChooser();
-        chooser.addDefault("Default Auto", defaultAuto);
-        chooser.addObject("My Auto", customAuto);
-        SmartDashboard.putData("Auto choices", chooser);
-     // instantiates new subsystems with
-        currentDrive = new Drive(); // instantiates drive class
-        
-        
-    }
-    	//currentLowerArm = new LowerArm();
+
+	/**
+	 * This function is run when the robot is first started up and should be
+	 * used for any initialization code./
+	 */
+	public void robotInit() {
+		chooser = new SendableChooser();
+		chooser.addDefault("Default Auto", defaultAuto);
+		chooser.addObject("My Auto", customAuto);
+		SmartDashboard.putData("Auto choices", chooser);
+
+		// instantiates new subsystems with
+		currentDrive = new Drive(); // instantiates drive class
+	}
+
 	/**
 	 * This autonomous (along with the chooser code above) shows how to select between different autonomous modes
 	 * using the dashboard. The sendable chooser code works with the Java SmartDashboard. If you prefer the LabVIEW
@@ -72,61 +72,55 @@ public class Robot extends IterativeRobot {
 	 * You can add additional auto modes by adding additional comparisons to the switch structure below with additional strings.
 	 * If using the SendableChooser make sure to add them to the chooser code above as well.
 	 */
-    public void autonomousInit() {
-    	autoSelected = (String) chooser.getSelected();
-//		autoSelected = SmartDashboard.getString("Auto Selector", defaultAuto);
+	public void autonomousInit() {
+		autoSelected = (String) chooser.getSelected();
+		//autoSelected = SmartDashboard.getString("Auto Selector", defaultAuto);
 		System.out.println("Auto selected: " + autoSelected);
 		//adds the AutonomousDriveCommand
 		Scheduler.getInstance().add(new BasicAutonomousDriveCommand());
-    }
- 
-    /**
-     * This function is called periodically during autonomous
-     */
-    public void autonomousPeriodic() {
-    	Scheduler.getInstance().run();
-    	
-    	switch(autoSelected) {
-    	case customAuto:
-        //Put custom auto code here   
-            break;
-    	case defaultAuto:
-    	default:
-    	//Put default auto code here
-            break;
-    	}
-    }
-    
-    public void teleopInit() {
-    	
-    	
-    	//initialize a joystickbutton on joystick button 2
-    	Button collectBallButton = new JoystickButton(myJoystick, 6);
-    	collectBallButton.whileHeld(new PickupBallCommand());
-    	
-    	JoystickButton shooterButton = new JoystickButton(myJoystick, 5);
-    	shooterButton.whileHeld(new ShootLowGoalCommand());
-    	
-    	Button shootBallButton = new JoystickButton(myJoystick, 2);
-    	shootBallButton.whenPressed(new ShootHighGoalGroup());
-    	
-    	
-    }
+	}
 
-    /**
-     * This function is called periodically during operator control
-     */
-    public void teleopPeriodic() {
-        Scheduler.getInstance().run();
-        
-        
-    }
-    
-    /**
-     * This function is called periodically during test mode
-     */
-    public void testPeriodic() {
-    
-    }
-    
+	/**
+	 * This function is called periodically during autonomous
+	 */
+	public void autonomousPeriodic() {
+		Scheduler.getInstance().run();
+
+		switch(autoSelected) {
+		case customAuto:
+			//Put custom auto code here
+			break;
+		case defaultAuto:
+		default:
+			//Put default auto code here
+			break;
+		}
+	}
+
+	public void teleopInit() {
+
+		//initialize a joystickbutton on joystick button 2
+		Button collectBallButton = new JoystickButton(myJoystick, 6);
+		collectBallButton.whileHeld(new PickupBallCommand());
+
+		JoystickButton shooterButton = new JoystickButton(myJoystick, 5);
+		shooterButton.whileHeld(new ShootLowGoalCommand());
+
+		Button shootBallButton = new JoystickButton(myJoystick, 2);
+		shootBallButton.whenPressed(new ShootHighGoalGroup());
+	}
+
+	/**
+	 * This function is called periodically during operator control
+	 */
+	public void teleopPeriodic() {
+		Scheduler.getInstance().run();
+	}
+
+	/**
+	 * This function is called periodically during test mode
+	 */
+	public void testPeriodic() {
+
+	}
 }
